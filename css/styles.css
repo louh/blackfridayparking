@@ -1,0 +1,170 @@
+html, body {
+  padding: 0;
+  margin: 0;
+  overflow: hidden;
+  font-size: 14px;
+  font-family: 'Roboto', Helvetica, Arial, sans-serif;
+  font-weight: 300;
+}
+
+#about {
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  padding: 1em;
+  height: auto;
+  z-index: 20000;
+  background-color: white;
+  box-shadow: 0 0 8px rgba(0,0,0,0.35);
+  font-size: 1rem;
+  color: #333;
+}
+
+#about p {
+  margin-bottom: 0;
+}
+
+.title-hashtag {
+  color: #993300;
+}
+
+h1 {
+  margin-top: 0;
+  margin-bottom: 0.5em;
+  font-family: 'Montserrat', 'Roboto', Helvetica, Arial, sans-serif;
+  font-weight: normal;
+  font-size: 1.4em;
+  color: #ff6600;
+}
+
+a, a:hover, a:visited, a:active {
+  color: #ee2200;
+}
+
+#map {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+#data-container {
+  display: none;
+}
+
+#infowindow-loader {
+  height: 100%;
+  min-height: 6em;
+  text-align: center;
+}
+
+div.cartodb-popup {
+  padding: 0 !important;
+}
+div.cartodb-popup.v2 {
+  border-radius: 5px;
+}
+
+div.cartodb-searchbox,
+div.cartodb-share a,
+div.cartodb-zoom,
+div.cartodb-legend-stack {
+  border: 0;
+}
+
+.cartodb-popup-content-wrapper {
+  display: none;
+}
+
+
+#embedded-content {
+  position: relative;
+  overflow: hidden;
+}
+
+#embedded-content iframe {
+  margin: 0 !important;
+  border: 0 !important;
+  max-width: 100% !important;
+  border-bottom-right-radius: 0 !important;
+  border-bottom-left-radius: 0 !important;
+  border-top-right-radius: 0 !important;
+  border-top-left-radius: 0 !important;
+}
+
+@media only screen and (max-width: 768px) {
+  #about {
+    font-size: 0.85em;
+    padding: 1em;
+  }
+}
+
+/* LOADER http://projects.lukehaas.me/css-loaders/ */
+#infowindow-loader .loader,
+#infowindow-loader .loader:before,
+#infowindow-loader .loader:after {
+  background: rgba(127,127,127,0.5);
+  -webkit-animation: load1 1s infinite ease-in-out;
+  animation: load1 1s infinite ease-in-out;
+  width: 1em;
+  height: 4em;
+}
+#infowindow-loader .loader:before,
+#infowindow-loader .loader:after {
+  position: absolute;
+  top: 0;
+  content: '';
+}
+#infowindow-loader .loader:before {
+  left: -1.5em;
+}
+#infowindow-loader .loader {
+  text-indent: -9999em;
+  margin: 8em auto;
+  position: relative;
+  font-size: 3px;
+  -webkit-animation-delay: -0.16s;
+  animation-delay: -0.16s;
+}
+#infowindow-loader .loader:after {
+  left: 1.5em;
+  -webkit-animation-delay: -0.32s;
+  animation-delay: -0.32s;
+}
+@-webkit-keyframes load1 {
+  0%,
+  80%,
+  100% {
+    box-shadow: 0 0 rgba(127,127,127,0.5);
+    height: 4em;
+  }
+  40% {
+    box-shadow: 0 -2em rgba(127,127,127,0.5);
+    height: 5em;
+  }
+}
+@keyframes load1 {
+  0%,
+  80%,
+  100% {
+    box-shadow: 0 0 rgba(127,127,127,0.5);
+    height: 4em;
+  }
+  40% {
+    box-shadow: 0 -2em rgba(127,127,127,0.5);
+    height: 5em;
+  }
+}
+/* overrides */
+#infowindow-loader .loader {
+  position: absolute;
+  display: inline-block;
+  margin: 0 auto;
+  margin-top: -6px;
+  top: 50%;
+}
