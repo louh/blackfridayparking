@@ -45,11 +45,32 @@
                 twttr.events.bind(
                   'rendered',
                   function (event) {
-                    console.log("Created widget", event.target.id)
+                    //console.log("Created widget", event.target.id)
                     $('#infowindow-loader').hide()
                     // Pan window to fit the thing
                   }
                 )
+              } else if (source === 'instagram') {
+                var url = $('#data-container').data('url')
+                $.ajax({
+                  url: 'http://api.instagram.com/oembed?url='+url+'&beta=true',
+                  dataType: "jsonp",
+                  cache: false,
+                  success: function (response) {
+                    console.log(response)
+
+                    $('#infowindow-loader').hide()
+                    if (response.html) {
+                      $('#embedded-content').html(response.html)
+                      $('#embedded-content').find('iframe').height(370)
+                    } else {
+                      $('#embedded-content').html('<div class="error">Could not embed the instagram</div>')
+                    }
+                  },
+                  error: function () {
+                    console.log("couldn't process the instagram url")
+                  }
+                })
               }
             }, 100)
           })
