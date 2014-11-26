@@ -53,7 +53,7 @@
               } else if (source === 'instagram') {
                 var url = $('#data-container').data('url')
                 $.ajax({
-                  url: 'http://api.instagram.com/oembed?url='+url+'&beta=true',
+                  url: 'http://api.instagram.com/oembed?url='+url+'&beta=true&omitscript=true',
                   dataType: "jsonp",
                   cache: false,
                   success: function (response) {
@@ -62,7 +62,7 @@
                     $('#infowindow-loader').hide()
                     if (response.html) {
                       $('#embedded-content').html(response.html)
-                      $('#embedded-content').find('iframe').height(370)
+                      instgrm.Embeds.process()
                     } else {
                       $('#embedded-content').html('<div class="error">Could not embed the instagram</div>')
                     }
