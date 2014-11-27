@@ -106,12 +106,40 @@ div.cartodb-legend-stack {
 }
 
 @media only screen and (max-width: 768px) {
-  div.cartodb-popup.v2 {
-    width: 250px !important;
-  }
   #about {
     font-size: 0.85em;
     padding: 1em;
+  }
+  div.cartodb-popup.v2 {
+    width: 250px !important;
+  }
+}
+
+@media only screen and (max-width: 640px) {
+  div.cartodb-searchbox {
+    display: none !important;
+  }
+}
+
+@media only screen and (max-width: 450px) {
+  .cartodb-share-dialog.small .modal {
+    width: auto !important;
+    margin-left: 0 !important;
+    left: 30px;
+    right: 30px;
+    margin-top: -185px;
+  }
+  .cartodb-share-dialog .block .content .buttons, .cartodb-share-dialog .block .content .embed_code {
+    display: block;
+  }
+  .cartodb-share-dialog .block .buttons li a {
+    width: 100%;
+    box-sizing: border-box;
+    text-align: center;
+  }
+  .cartodb-share-dialog .block .content .embed_code textarea {
+    width: 100%;
+    box-sizing: border-box;
   }
 }
 
