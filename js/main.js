@@ -14,6 +14,77 @@
     }
   }
 
+  function checkForInfowindowData () {
+    var data = $('#data-container').data()
+
+    if (data.source === 'twitter') {
+      renderTwitter(data, afterInfowindowRender)
+    } else if (data.source === 'instagram') {
+      renderInstagram(data, afterInfowindowRender)
+    } else {
+      setTimeout(checkForInfowindowData, 200)
+    }
+  }
+
+  function renderInstagram (data, callback) {
+    var url = data.url
+
+    if (typeof instgrm === 'undefined') {
+      renderInfowindowError('Unable to connect to Instagram.')
+      return
+    }
+
+    $.ajax({
+      url: 'http://api.instagram.com/oembed?url='+url+'&beta=true&omitscript=true',
+      dataType: "jsonp",
+      cache: false,
+      success: function (response) {
+        if (response.html) {
+          $('#embedded-content').html(response.html)
+          instgrm.Embeds.process()
+        } else {
+          $('#embedded-content').html('<div class="error">Could not embed the instagram</div>')
+        }
+
+        if (typeof callback === 'function') callback()
+      },
+      error: function () {
+        console.log('Could not process the instagram url')
+        renderInfowindowError('Unable to connect to Instagram.')
+      }
+    })
+  }
+
+  function renderTwitter (data, callback) {
+    var username   = data.username,
+        identifier = data.identifier
+
+    if (typeof twttr === 'undefined') {
+      renderInfowindowError('Unable to connect to Twitter.')
+      return
+    }
+
+    // Set the bare minimum HTML required for Twitter to render a widget
+    $('#embedded-content').html("<blockquote class='twitter-tweet' lang='en'><a href='https://twitter.com/"+username+"/status/"+identifier+"'></a></blockquote>").show()
+
+    // Tell twitter to do its job
+    twttr.widgets.load(document.getElementById('embedded-content'))
+    twttr.events.bind('rendered', function (event) {
+      if (typeof callback === 'function') callback()
+    })
+  }
+
+  function renderInfowindowError (message) {
+    if (!message) message = 'There was an error loading this, please try again.'
+    $('#embedded-content').html('<div class="error">'+message+'</div>')
+    afterInfowindowRender()
+  }
+
+  function afterInfowindowRender () {
+    $('#infowindow-loader').hide()
+    // TODO: Pan window to fit the thing
+  }
+
   $(document).ready(function () {
 
     if (inIframe()) {
@@ -31,50 +102,7 @@
 
         pointLayer
           .on('featureClick', function (e, latlng, pos, data) {
-            setTimeout(function () {
-              //var template = $('#infowindow_template').html()
-              //pointLayer.infowindow.set('template', template)
-
-              var source = $('#data-container').data('source')
-              var identifier = $('#data-container').data('identifier')
-              var username = $('#data-container').data('username')
-
-              if (source === 'twitter') {
-                $('#embedded-content').html("<blockquote class='twitter-tweet' lang='en'><a href='https://twitter.com/"+username+"/status/"+identifier+"'></a></blockquote>").show()
-                twttr.widgets.load()
-                twttr.events.bind(
-                  'rendered',
-                  function (event) {
-                    //console.log("Created widget", event.target.id)
-                    $('#infowindow-loader').hide()
-                    // Pan window to fit the thing
-                  }
-                )
-              } else if (source === 'instagram') {
-                var url = $('#data-container').data('url')
-                $.ajax({
-                  url: 'http://api.instagram.com/oembed?url='+url+'&beta=true&omitscript=true',
-                  dataType: "jsonp",
-                  cache: false,
-                  success: function (response) {
-                    console.log(response)
-
-                    $('#infowindow-loader').hide()
-                    if (response.html) {
-                      $('#embedded-content').html(response.html)
-                      instgrm.Embeds.process()
-                    } else {
-                      $('#embedded-content').html('<div class="error">Could not embed the instagram</div>')
-                    }
-                  },
-                  error: function () {
-                    console.log("couldn't process the instagram url")
-                  }
-                })
-              } else {
-                $('#embedded-content').html("<div class='error'>There was an error loading this, please try again.</div>")
-              }
-            }, 200) // Dumb hack to wait for template to populate first
+            checkForInfowindowData()
           })
           .on('error', function (err) {
             console.log('[CartoDB] error: ' + err)
