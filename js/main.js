@@ -32,8 +32,8 @@
         pointLayer
           .on('featureClick', function (e, latlng, pos, data) {
             setTimeout(function () {
-              var template = $('#infowindow_template').html()
-              pointLayer.infowindow.set('template', template)
+              //var template = $('#infowindow_template').html()
+              //pointLayer.infowindow.set('template', template)
 
               var source = $('#data-container').data('source')
               var identifier = $('#data-container').data('identifier')
@@ -71,8 +71,10 @@
                     console.log("couldn't process the instagram url")
                   }
                 })
+              } else {
+                alert('unknown')
               }
-            }, 100)
+            }, 200) // Dumb hack to wait for template to populate first
           })
           .on('error', function (err) {
             console.log('[CartoDB] error: ' + err)
