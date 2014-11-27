@@ -85,12 +85,12 @@ div.cartodb-legend-stack {
 #embedded-content {
   position: relative;
   overflow: hidden;
+  border-radius: 5px;
 }
 
 #embedded-content iframe {
   margin: 0 !important;
   border: 0 !important;
-  border-radius: 5px;
   max-width: 100% !important;
   width: 100% !important;
   border-bottom-right-radius: 0 !important;
