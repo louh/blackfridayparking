@@ -105,6 +105,14 @@ div.cartodb-legend-stack {
   line-height: 6em;
 }
 
+/* CartoDB.css use @2x images */
+@media screen and (min-resolution: 2dppx) {
+  div.cartodb-share a {
+    background: #FFF url(http://libs.cartocdn.com/cartodb.js/v3/3.11/themes/img/share@2x.png) no-repeat 6px 7px;
+    background-size: 50%;
+  }
+}
+
 @media only screen and (max-width: 768px) {
   #about {
     font-size: 0.85em;
