@@ -111,6 +111,9 @@ div.cartodb-legend-stack {
     background: #FFF url(http://libs.cartocdn.com/cartodb.js/v3/3.11/themes/img/share@2x.png) no-repeat 6px 7px;
     background-size: 50%;
   }
+  div.cartodb-share a:hover {
+    background: #FFF url(http://libs.cartocdn.com/cartodb.js/v3/3.11/themes/img/share@2x.png) no-repeat 6px 7px;
+  }
 }
 
 @media only screen and (max-width: 768px) {
