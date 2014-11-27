@@ -72,7 +72,7 @@
                   }
                 })
               } else {
-                alert('unknown')
+                $('#embedded-content').html("<div class='error'>There was an error loading this, please try again.</div>")
               }
             }, 200) // Dumb hack to wait for template to populate first
           })
