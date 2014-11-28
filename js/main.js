@@ -125,6 +125,10 @@
 
         MAP = viz.getNativeMap()
 
+        if (inIframe()) {
+          MAP.scrollWheelZoom.disable()
+        }
+
         pointLayer
           .on('featureClick', function (e, latlng, pos, data) {
             checkForInfowindowData()
