@@ -1,6 +1,8 @@
 'use strict';
 (function ($) {
 
+  var MAP // global reference to the Leaflet map object
+
   function resizeMapWindow () {
     var aboutBoxHeight = $('#about').outerHeight()
     $('#map').css('top', Math.floor(aboutBoxHeight))
@@ -83,6 +85,27 @@
   function afterInfowindowRender () {
     $('#infowindow-loader').hide()
     // TODO: Pan window to fit the thing
+    panViewportIfNeeded()
+  }
+
+  function panViewportIfNeeded () {
+    var infowindowOffset = $('#embedded-content').offset(),
+        infowindowWidth  = $('#embedded-content').width(),
+        viewportOffset   = $('#map').offset(),
+        viewportWidth    = $('#map').width()
+
+    var mustPanTop  = (infowindowOffset.top <= viewportOffset.top) ? true : false
+    var mustPanLeft = ((infowindowOffset.left + infowindowWidth) >= viewportOffset.width) ? true : false
+    var topDiff     = viewportOffset.top - infowindowOffset.top
+    var leftDiff    = (infowindowOffset.left + infowindowWidth) - viewportOffset.width
+
+    if (mustPanTop && mustPanLeft) {
+      MAP.panBy([leftDiff + 20, -(topDiff + 20)])
+    } else if (mustPanTop) {
+      MAP.panBy([0, -(topDiff + 20)])
+    } else {
+      MAP.panBy([leftDiff + 20, 0])
+    }
   }
 
   $(document).ready(function () {
@@ -99,6 +122,8 @@
     cartodb.createVis('map', 'http://lou.cartodb.com/api/v2/viz/d00a8afc-752e-11e4-8ec0-0e018d66dc29/viz.json')
       .on('done', function (viz, layers) {
         var pointLayer = layers[1]
+
+        MAP = viz.getNativeMap()
 
         pointLayer
           .on('featureClick', function (e, latlng, pos, data) {
