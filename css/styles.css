@@ -107,12 +107,10 @@ div.cartodb-legend-stack {
 
 /* CartoDB.css use @2x images */
 @media screen and (min-resolution: 2dppx) {
-  div.cartodb-share a {
-    background: #FFF url(http://libs.cartocdn.com/cartodb.js/v3/3.11/themes/img/share@2x.png) no-repeat 6px 7px;
-    background-size: 50%;
-  }
+  div.cartodb-share a,
   div.cartodb-share a:hover {
     background: #FFF url(http://libs.cartocdn.com/cartodb.js/v3/3.11/themes/img/share@2x.png) no-repeat 6px 7px;
+    background-size: 50%;
   }
 }
 
