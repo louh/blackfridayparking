@@ -1,6 +1,6 @@
 'use strict';
+/*global instgrm, twttr, cartodb, jQuery */
 (function ($) {
-
   var MAP // global reference to the Leaflet map object
 
   function resizeMapWindow () {
@@ -37,8 +37,8 @@
     }
 
     $.ajax({
-      url: 'http://api.instagram.com/oembed?url='+url+'&beta=true&omitscript=true',
-      dataType: "jsonp",
+      url: 'http://api.instagram.com/oembed?url=' + url + '&beta=true&omitscript=true',
+      dataType: 'jsonp',
       cache: false,
       success: function (response) {
         if (response.html) {
@@ -58,8 +58,8 @@
   }
 
   function renderTwitter (data, callback) {
-    var username   = data.username,
-        identifier = data.identifier
+    var username = data.username
+    var identifier = data.identifier
 
     if (typeof twttr === 'undefined') {
       renderInfowindowError('Unable to connect to Twitter.')
@@ -67,7 +67,7 @@
     }
 
     // Set the bare minimum HTML required for Twitter to render a widget
-    $('#embedded-content').html("<blockquote class='twitter-tweet' lang='en'><a href='https://twitter.com/"+username+"/status/"+identifier+"'></a></blockquote>").show()
+    $('#embedded-content').html('<blockquote class="twitter-tweet" lang="en"><a href="https://twitter.com/' + username + '/status/' + identifier + '"></a></blockquote>').show()
 
     // Tell twitter to do its job
     twttr.widgets.load(document.getElementById('embedded-content'))
@@ -78,7 +78,7 @@
 
   function renderInfowindowError (message) {
     if (!message) message = 'There was an error loading this, please try again.'
-    $('#embedded-content').html('<div class="error">'+message+'</div>')
+    $('#embedded-content').html('<div class="error">' + message + '</div>')
     afterInfowindowRender()
   }
 
@@ -89,15 +89,14 @@
   }
 
   function panViewportIfNeeded () {
-    var infowindowOffset = $('#embedded-content').offset(),
-        infowindowWidth  = $('#embedded-content').width(),
-        viewportOffset   = $('#map').offset(),
-        viewportWidth    = $('#map').width()
+    var infowindowOffset = $('#embedded-content').offset()
+    var infowindowWidth = $('#embedded-content').width()
+    var viewportOffset = $('#map').offset()
 
-    var mustPanTop  = (infowindowOffset.top <= viewportOffset.top) ? true : false
-    var mustPanLeft = ((infowindowOffset.left + infowindowWidth) >= viewportOffset.width) ? true : false
-    var topDiff     = viewportOffset.top - infowindowOffset.top
-    var leftDiff    = (infowindowOffset.left + infowindowWidth) - viewportOffset.width
+    var mustPanTop = (infowindowOffset.top <= viewportOffset.top)
+    var mustPanLeft = ((infowindowOffset.left + infowindowWidth) >= viewportOffset.width)
+    var topDiff = viewportOffset.top - infowindowOffset.top
+    var leftDiff = (infowindowOffset.left + infowindowWidth) - viewportOffset.width
 
     if (mustPanTop && mustPanLeft) {
       MAP.panBy([leftDiff + 20, -(topDiff + 20)])
