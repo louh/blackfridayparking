@@ -9,9 +9,9 @@
     <meta name='description' content=''>
     <meta name='viewport' content='width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no'>
 
-    <link href='http://fonts.googleapis.com/css?family=Roboto:400,300|Montserrat:400,700' rel='stylesheet'>
-    <link href='http://libs.cartocdn.com/cartodb.js/v3/3.11/themes/css/cartodb.css' rel='stylesheet'>
-    <link href='//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css' rel='stylesheet'>
+    <link href='https://fonts.googleapis.com/css?family=Roboto:400,300|Montserrat:400,700' rel='stylesheet'>
+    <link href='https://cartodb-libs.global.ssl.fastly.net/cartodb.js/v3/3.15/themes/css/cartodb.css' rel='stylesheet'>
+    <link href='https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css' rel='stylesheet'>
     <link href='css/styles.css' rel='stylesheet'>
 
     <script>
@@ -33,34 +33,18 @@
       <h1><span class='title-hashtag'>#</span>blackfridayparking</h1>
 
       <p>
-        Crowdsourced photos of “peak parking demand” on the busiest shopping day of the year, from geotagged <a href='https://twitter.com/search?q=%23blackfridayparking' target='_blank'>tweets</a> and instagrams. <a href='http://www.strongtowns.org/journal/2014/11/24/black-friday-parking-2014-event' target='_blank'>Learn more</a> / <a href='https://lou.cartodb.com/tables/blackfridayparking/public' target='_blank'>view data</a> / <a href='https://github.com/louh/blackfridayparking' target='_blank'>source code</a>
+        Crowdsourced photos of “peak parking demand” on the busiest shopping day of the year, from geotagged <a href='https://twitter.com/search?q=%23blackfridayparking' target='_blank'>tweets</a> and instagrams. <a href='http://www.strongtowns.org/eventspage/2015/11/27/blackfridayparking' target='_blank'>Learn more</a> / <a href='https://lou.cartodb.com/tables/blackfridayparking/public' target='_blank'>view data</a> / <a href='https://github.com/louh/blackfridayparking' target='_blank'>source code</a>
       </p>
     </div>
 
     <div id='map'></div>
 
-
-    <script type='infowindow/html' id='infowindow_template'>
-      <div class='cartodb-popup v2' data-check='page template'>
-        <a href='#close' class='cartodb-popup-close-button close'>x</a>
-
-        <div id='data-container' data-source='{{content.data.source}}' data-identifier='{{content.data.identifier}}' data-username='{{content.data.username}}' data-location-name='{{content.data.location_name}}' data-location-address='{{content.data.location_address}}' data-url='{{content.data.url}}'></div>
-        <div id='infowindow-loader'><div class='loader'></div></div>
-        <div id='embedded-content'></div>
-        <div class='cartodb-popup-content-wrapper'>
-          <div class='cartodb-popup-content'>
-          </div>
-        </div>
-        <div class='cartodb-popup-tip-container'></div>
-      </div>
-    </script>
-
-    <script src='//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js'></script>
+    <script src='https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js'></script>
     <script>window.jQuery || document.write('<script src=\'js/vendor/jquery-1.11.1.min.js\'><\/script>')</script>
 
-    <script src='http://libs.cartocdn.com/cartodb.js/v3/3.11/cartodb.js'></script>
-    <script async src='//platform.twitter.com/widgets.js' charset='utf-8'></script>
-    <script async defer src='//platform.instagram.com/en_US/embeds.js'></script>
+    <script src='https://cartodb-libs.global.ssl.fastly.net/cartodb.js/v3/3.15/cartodb.js'></script>
+    <script async src='https://platform.twitter.com/widgets.js' charset='utf-8'></script>
+    <script async defer src='https://platform.instagram.com/en_US/embeds.js'></script>
     <script src='js/main.js'></script>
   </body>
 </html>

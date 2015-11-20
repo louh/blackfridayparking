@@ -9,7 +9,6 @@ body {
 }
 
 #about {
-  -moz-box-sizing: border-box;
   box-sizing: border-box;
   position: absolute;
   top: 0;
@@ -24,6 +23,7 @@ body {
   border-bottom: 1px solid #e6e7e6;
   font-size: 1rem;
   color: #333;
+  display: none;
 }
 
 #about p {
