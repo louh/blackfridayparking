@@ -43,7 +43,10 @@ h1 {
   color: #ff6600;
 }
 
-a, a:hover, a:visited, a:active {
+#about a,
+#about a:hover,
+#about a:visited,
+#about a:active {
   color: #ee2200;
 }
 

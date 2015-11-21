@@ -1,8 +1,9 @@
 'use strict';
-/*global instgrm, twttr, cartodb, jQuery */
+/*global L, instgrm, twttr, cartodb, jQuery */
+// NOTE
+// cartodb.js is bundled with its own internal Leaflet
+// do not add another Leaflet or it will break!
 (function ($) {
-  var MAP // global reference to the Leaflet map object
-
   var VIZ_2014 = 'https://lou.cartodb.com/api/v2/viz/d00a8afc-752e-11e4-8ec0-0e018d66dc29/viz.json'
   var VIZ_2015 = 'https://lou.cartodb.com/api/v2/viz/c9440e96-8fb3-11e5-861b-0ea31932ec1d/viz.json'
 
@@ -12,7 +13,7 @@
   }
 
   function checkForInfowindowData () {
-    var data = $('#data-container').data()
+    var data = document.querySelector('#data-container').dataset
 
     if (data.source === 'twitter') {
       renderTwitter(data, afterInfowindowRender)
@@ -89,8 +90,7 @@
   }
 
   function afterInfowindowRender () {
-    $('#infowindow-loader').hide()
-    // TODO: Pan window to fit the thing
+    document.querySelector('#infowindow-loader').style.display = 'none'
     panViewportIfNeeded()
   }
 
@@ -105,11 +105,18 @@
     var leftDiff = (infowindowOffset.left + infowindowWidth) - viewportOffset.width
 
     if (mustPanTop && mustPanLeft) {
-      MAP.panBy([leftDiff + 20, -(topDiff + 20)])
+      map.panBy([leftDiff + 20, -(topDiff + 20)])
     } else if (mustPanTop) {
-      MAP.panBy([0, -(topDiff + 20)])
+      map.panBy([0, -(topDiff + 20)])
     } else {
-      MAP.panBy([leftDiff + 20, 0])
+      map.panBy([leftDiff + 20, 0])
+    }
+  }
+
+  function modifyAnchorTargets () {
+    var anchors = document.querySelectorAll('a')
+    for (var i = 0, j = anchors.length; i < j; i++) {
+      anchors[i].target = '_top'
     }
   }
 
@@ -123,25 +130,63 @@
   }
 
   // Map time
-  cartodb.createVis('map', VIZ_2015)
-    .on('done', function (viz, layers) {
-      var pointLayer = layers[1]
+  // We are going to make our own Leaflet map so we can
+  // set the tile layer and have control over stuff
+  var map = L.map('map', {
+    scrollWheelZoom: (window.self === window.top),
+    center: [38.92522904714054, -97.646484375],
+    zoom: 4
+  })
 
-      MAP = viz.getNativeMap()
+  // Fit to USA
+  // Bounds, center and zoom are borrowed from vizjson
+  // Update this if our view changes on the CartoDB map
+  var bounds = [
+    [
+      15.453680224345835,
+      -155.56640625
+    ],
+    [
+      56.607885465009254,
+      -39.63867187499999
+    ]
+  ]
+  map.fitBounds(bounds)
 
+  var basemapUrl = 'https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png'
+  if (window.devicePixelRatio >= 2) {
+    basemapUrl = 'https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}@2x.png'
+  }
+
+  var layer = L.tileLayer(basemapUrl, {
+    attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, &copy; <a href="http://cartodb.com/attributions">CartoDB</a>'
+  }).addTo(map)
+
+  var geocoder = L.control.geocoder('search-c0qrIOY', {
+    pointIcon: false,
+    polygonIcon: false,
+    bounds: bounds,
+    latlng: true,
+    expanded: true,
+    position: 'topright'
+  }).addTo(map)
+
+  cartodb.createLayer(map, VIZ_2015)
+    .addTo(map)
+    .on('done', function (layer) {
       if (window.self !== window.top) {
-        MAP.scrollWheelZoom.disable()
+        modifyAnchorTargets()
       }
 
-      pointLayer
+      layer
         .on('featureClick', function (e, latlng, pos, data) {
           checkForInfowindowData()
         })
         .on('error', function (err) {
           console.log('[CartoDB] error: ' + err)
         })
-
-    }).on('error', function (err) {
+    })
+    .on('error', function (err) {
       console.log('[CartoDB] some error occurred: ' + err)
     })
 
