@@ -15,7 +15,7 @@ body {
   left: 0;
   right: 0;
   width: 100%;
-  padding: 1em;
+  padding: 12px;
   height: auto;
   z-index: 20000;
   background-color: white;
@@ -224,4 +224,8 @@ div.cartodb-infowindow {
   margin: 0 auto;
   margin-top: -6px;
   top: 50%;
+}
+
+blockquote.twitter-tweet {
+  border: 0;
 }

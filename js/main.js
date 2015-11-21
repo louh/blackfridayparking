@@ -104,15 +104,17 @@
     var mapRect = mapEl.getBoundingClientRect()
 
     var mustPanTop = (popupRect.top <= mapRect.top)
-    var mustPanLeft = (popupRect.right >= mapRect.width)
+    var mustPanLeft = (popupRect.right >= mapRect.right)
     var topDiff = mapRect.top - popupRect.top
-    var leftDiff = popupRect.right - mapRect.width
+    var leftDiff = mapRect.right - popupRect.right
+
+    console.log(mustPanLeft, popupRect.right, mapRect.right)
 
     if (mustPanTop && mustPanLeft) {
       map.panBy([leftDiff + buffer, -(topDiff + buffer)])
     } else if (mustPanTop) {
       map.panBy([0, -(topDiff + buffer)])
-    } else {
+    } else if (mustPanLeft) {
       map.panBy([leftDiff + buffer, 0])
     }
   }
