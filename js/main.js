@@ -1,9 +1,10 @@
 'use strict';
 /*global L, instgrm, twttr, cartodb, jQuery */
 // NOTE
-// cartodb.js is bundled with its own internal Leaflet
+// cartodb.js is bundled with its own internal Leaflet (@v0.7.3)
 // do not add another Leaflet or it will break!
-(function ($) {
+// It is also bundled with its own jQuery! (@v1.7.2)
+(function () {
   var VIZ_2014 = 'https://lou.cartodb.com/api/v2/viz/d00a8afc-752e-11e4-8ec0-0e018d66dc29/viz.json'
   var VIZ_2015 = 'https://lou.cartodb.com/api/v2/viz/c9440e96-8fb3-11e5-861b-0ea31932ec1d/viz.json'
 
@@ -95,21 +96,24 @@
   }
 
   function panViewportIfNeeded () {
-    var infowindowOffset = $('#embedded-content').offset()
-    var infowindowWidth = $('#embedded-content').width()
-    var viewportOffset = $('#map').offset()
+    var buffer = 24
+    var popupEl = document.querySelector('#embedded-content')
+    var mapEl = document.querySelector('#map')
 
-    var mustPanTop = (infowindowOffset.top <= viewportOffset.top)
-    var mustPanLeft = ((infowindowOffset.left + infowindowWidth) >= viewportOffset.width)
-    var topDiff = viewportOffset.top - infowindowOffset.top
-    var leftDiff = (infowindowOffset.left + infowindowWidth) - viewportOffset.width
+    var popupRect = popupEl.getBoundingClientRect()
+    var mapRect = mapEl.getBoundingClientRect()
+
+    var mustPanTop = (popupRect.top <= mapRect.top)
+    var mustPanLeft = (popupRect.right >= mapRect.width)
+    var topDiff = mapRect.top - popupRect.top
+    var leftDiff = popupRect.right - mapRect.width
 
     if (mustPanTop && mustPanLeft) {
-      map.panBy([leftDiff + 20, -(topDiff + 20)])
+      map.panBy([leftDiff + buffer, -(topDiff + buffer)])
     } else if (mustPanTop) {
-      map.panBy([0, -(topDiff + 20)])
+      map.panBy([0, -(topDiff + buffer)])
     } else {
-      map.panBy([leftDiff + 20, 0])
+      map.panBy([leftDiff + buffer, 0])
     }
   }
 
@@ -190,4 +194,4 @@
       console.log('[CartoDB] some error occurred: ' + err)
     })
 
-}(jQuery))
+}())
