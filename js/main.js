@@ -136,25 +136,24 @@
   // Map time
   // We are going to make our own Leaflet map so we can
   // set the tile layer and have control over stuff
-  var map = L.map('map', {
-    scrollWheelZoom: (window.self === window.top),
-    center: [38.92522904714054, -97.646484375],
-    zoom: 4
-  })
 
   // Fit to USA
-  // Bounds, center and zoom are borrowed from vizjson
-  // Update this if our view changes on the CartoDB map
   var bounds = [
     [
-      23.2413,
-      -129.7265
+      25.4035,
+      -124.8046
     ],
     [
-      48.6909,
-      -59.7656
+      49.4395,
+      -66.3574
     ]
   ]
+
+  var map = L.map('map', {
+    scrollWheelZoom: (window.self === window.top),
+    center: [(bounds[0][0] + bounds[1][0]) / 2, (bounds[0][1] + bounds[1][1]) / 2],
+    zoom: 4
+  })
 
   map.fitBounds(bounds)
 
