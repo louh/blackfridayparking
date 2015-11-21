@@ -147,14 +147,15 @@
   // Update this if our view changes on the CartoDB map
   var bounds = [
     [
-      15.453680224345835,
-      -155.56640625
+      23.2413,
+      -129.7265
     ],
     [
-      56.607885465009254,
-      -39.63867187499999
+      48.6909,
+      -59.7656
     ]
   ]
+
   map.fitBounds(bounds)
 
   var basemapUrl = 'https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png'
@@ -174,6 +175,12 @@
     expanded: true,
     position: 'topright'
   }).addTo(map)
+
+  // Hijack params
+  geocoder.getBoundingBoxParam = function (param) {
+    param['boundary.country'] = 'USA'
+    return param
+  }
 
   cartodb.createLayer(map, VIZ_2015)
     .addTo(map)
