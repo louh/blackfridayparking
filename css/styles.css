@@ -86,6 +86,10 @@ div.cartodb-legend-stack {
   display: none;
 }
 
+/* Matches cartodb.css specificity */
+div.cartodb-infowindow {
+  z-index: 1000;
+}
 
 #embedded-content {
   position: relative;
