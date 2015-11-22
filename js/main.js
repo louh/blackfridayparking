@@ -79,6 +79,10 @@
       if (renderedEmbedEl) {
         renderedEmbedEl.style.border = 0;
       }
+      var mediaBorderEl = iframeContents.querySelector('.MediaCard-borderOverlay')
+      if (mediaBorderEl) {
+        mediaBorderEl.style.border = 0;
+      }
 
       if (typeof callback === 'function') callback()
     })
@@ -95,7 +99,9 @@
 
   function afterInfowindowRender () {
     document.querySelector('#infowindow-loader').style.display = 'none'
-    panViewportIfNeeded()
+    var el = document.querySelector('#embedded-content iframe')
+    el.addEventListener('transitionend', panViewportIfNeeded)
+    //panViewportIfNeeded()
   }
 
   function panViewportIfNeeded () {

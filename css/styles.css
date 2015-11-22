@@ -100,12 +100,17 @@ div.cartodb-infowindow {
 #embedded-content iframe {
   margin: 0 !important;
   border: 0 !important;
-  max-width: 100% !important;
-  width: 100% !important;
   border-bottom-right-radius: 0 !important;
   border-bottom-left-radius: 0 !important;
   border-top-right-radius: 0 !important;
   border-top-left-radius: 0 !important;
+  max-width: 100% !important;
+  width: 100% !important;
+  max-height: 1000px;
+  height: auto;
+  -webkit-transition: height 80ms ease-in-out;
+  -moz-transition: height 80ms ease-in-out;
+  transition: height 80ms ease-in-out;
 }
 
 #embedded-content .error {
@@ -224,10 +229,6 @@ div.cartodb-infowindow {
   margin: 0 auto;
   margin-top: -6px;
   top: 50%;
-}
-
-blockquote.twitter-tweet {
-  border: 0;
 }
 
 .leaflet-touch .leaflet-control-zoom {
