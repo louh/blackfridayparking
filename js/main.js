@@ -159,6 +159,11 @@
 
   map.fitBounds(bounds)
 
+  var hash
+  map.on('moveend', function () {
+    hash = new L.Hash(map)
+  })
+
   var basemapUrl = 'https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png'
   if (window.devicePixelRatio >= 2) {
     basemapUrl = 'https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}@2x.png'

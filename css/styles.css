@@ -229,3 +229,7 @@ div.cartodb-infowindow {
 blockquote.twitter-tweet {
   border: 0;
 }
+
+.leaflet-touch .leaflet-control-zoom {
+  display: none;
+}
