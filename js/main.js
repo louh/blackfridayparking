@@ -77,6 +77,16 @@
     // Tell twitter to do its job
     twttr.widgets.load(embedEl)
     twttr.events.bind('rendered', function (event) {
+      // Get rid of a pesky 1px border around the tweet content box
+      // that does not appear to go away even though I set border style
+      // on the blockquote that got replaced
+      var iframeEl = document.querySelector('iframe')
+      var iframeContents = iframeEl.contentDocument || iframeEl.contentWindow.document
+      var renderedEmbedEl = iframeContents.querySelector('.EmbeddedTweet-tweet')
+      if (renderedEmbedEl) {
+        renderedEmbedEl.style.border = 0;
+      }
+
       if (typeof callback === 'function') callback()
     })
   }
