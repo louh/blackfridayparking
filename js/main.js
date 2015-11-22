@@ -1,9 +1,5 @@
 'use strict';
-/*global L, instgrm, twttr, cartodb, jQuery */
-// NOTE
-// cartodb.js is bundled with its own internal Leaflet (@v0.7.3)
-// do not add another Leaflet or it will break!
-// It is also bundled with its own jQuery! (@v1.7.2)
+/*global L, instgrm, twttr, cartodb */
 (function () {
   var VIZ_2014 = 'https://lou.cartodb.com/api/v2/viz/d00a8afc-752e-11e4-8ec0-0e018d66dc29/viz.json'
   var VIZ_2015 = 'https://lou.cartodb.com/api/v2/viz/c9440e96-8fb3-11e5-861b-0ea31932ec1d/viz.json'
@@ -36,11 +32,12 @@
       return
     }
 
-    $.ajax({
-      url: 'https://api.instagram.com/oembed?url=' + url + '&beta=true&omitscript=true',
-      dataType: 'jsonp',
-      cache: false,
-      success: function (response) {
+    var instagramAPI = 'https://api.instagram.com/oembed?url=' + url + '&beta=true&omitscript=true'
+    ajaxGet(instagramAPI, function (error, response) {
+      if (error) {
+        console.log('Could not process the instagram url', error)
+        renderInfowindowError('Unable to connect to Instagram.')
+      } else {
         var embedEl = document.getElementById('embedded-content')
 
         if (response.html) {
@@ -51,10 +48,6 @@
         }
 
         if (typeof callback === 'function') callback()
-      },
-      error: function () {
-        console.log('Could not process the instagram url')
-        renderInfowindowError('Unable to connect to Instagram.')
       }
     })
   }
@@ -132,6 +125,29 @@
     for (var i = 0, j = anchors.length; i < j; i++) {
       anchors[i].target = '_top'
     }
+  }
+
+  function ajaxGet (url, callback) {
+    var request = new XMLHttpRequest()
+    var method = 'GET'
+
+    request.open(method, url, true)
+
+    request.onload = function() {
+      if (request.status >= 200 && request.status < 400) {
+        // Success!
+        var respose = request.responseText
+        callback(error, response)
+      } else {
+        // We reached our target server, but it returned an error
+      }
+    }
+
+    request.onerror = function() {
+      // There was a connection error of some sort
+    }
+
+    request.send()
   }
 
   if (window.self === window.top) {
