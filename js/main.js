@@ -108,8 +108,6 @@
     var topDiff = mapRect.top - popupRect.top
     var leftDiff = mapRect.right - popupRect.right
 
-    console.log(mustPanLeft, popupRect.right, mapRect.right)
-
     if (mustPanTop && mustPanLeft) {
       map.panBy([leftDiff + buffer, -(topDiff + buffer)])
     } else if (mustPanTop) {
